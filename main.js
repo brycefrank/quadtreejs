@@ -6,7 +6,7 @@ function setup() {
 
   // Create random coordinates
 
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < 500; i++) {
     coordinates.push([random(1, 799), random(1, 799)]);
   }
 
@@ -28,15 +28,6 @@ function setup() {
 
   var quadtree = new QuadTree(coordinates);
 
-  quadtree.display()
-
-
-
-
-
-  console.log("Total points: " + coordinates.length);
-
-  console.log(quadtree.nodes.length);
 
 
 
