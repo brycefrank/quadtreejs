@@ -18,4 +18,5 @@ points within each node is <= the maximum threshold.
 
 ## TODO:
 
-Implement similar functionality with geometries (i.e. the circle) instead of points.
+Index point cloud with nodes.
+"Intersect" nodes with geometry (simply...)
