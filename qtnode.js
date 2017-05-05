@@ -10,6 +10,9 @@ function QuadTreeNode(posx, posy, width, parent, in_points, generation, tree) {
   this.has_children = 0; //could be lumped into some other variable
   this.tree = tree;
   this.final_points = [];
+  this.verts = [[this.posx, this.posy],
+              [this.posx + this.width, this.posy],
+                  [this.posx, this.posy + this.width], [this.posx+this.width, this.posy+this.width]]
 
 
   if (this.generation < 10) {
@@ -43,15 +46,42 @@ function QuadTreeNode(posx, posy, width, parent, in_points, generation, tree) {
       var in_points = this.intersect();
 
       if(in_points.length > max) {
+        // This node has child nodes.
         this.divide(in_points);
         this.has_children = 1;
+        noFill();
+        rect(this.posx, this.posy, this.width, this.width);
       } else if (in_points.length > 0){
+        // This node is at the bottom and has POI.
         this.final_points = in_points;
         this.tree.nodes_of_interest.push(this.id);
-        ellipse(this.posx, this.posy, 10, 10)
+        this.bottom = true;
+        fill(100);
+        rect(this.posx, this.posy, this.width, this.width)
+      } else {
+        // This node is at the bottom and has no POI
+        noFill();
+        this.bottom = true;
+        rect(this.posx, this.posy, this.width, this.width);
+      }
+    }
+
+    this.check_geom = function() {
+      //Checks if the node is inside or outside of the circle by checking
+      // if any of the 4 vertices are less than a radius away from the circle
+      // circle_center
+      var verts = this.verts;
+      for (var i = 0; i < verts.length; i++) {
+        //Check distance
+        distance = Math.sqrt((Math.pow(verts[i][0] - circle_center[0], 2)) + (Math.pow(verts[i][1] - circle_center[1], 2)));
+        if ((distance < circle_radius) && (this.bottom == true) && (this.final_points.length == 0)) {
+          this.in_circle = true;
+          console.log("bloop")
+          break
+        }
       }
     }
     this.check_intersect(5);
-    rect(this.posx, this.posy, this.width, this.width);
+    this.check_geom();
     }
 }

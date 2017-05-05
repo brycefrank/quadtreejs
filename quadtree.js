@@ -11,5 +11,4 @@ function QuadTree(coords) {
   //TODO: Make a recursive thingy.
 
   console.log(this.nodes_of_interest);
-
 }

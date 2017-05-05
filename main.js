@@ -1,4 +1,6 @@
 var coordinates = [];
+var circle_center = [400,400];
+var circle_radius = 200;
 
 function setup() {
   createCanvas(800,800);
@@ -27,19 +29,23 @@ function setup() {
   }
 
   // Draw a circular "plot" (once for now)
-  make_circle(0.05, 200);
-  var cloud = make_cloud(10000);
+  make_circle(0.05, circle_radius);
+  var cloud = make_cloud(20000);
 
 
+
+
+
+  //Initiate the quadtree object
+  var quadtree = new QuadTree(coordinates);
+
+  // Draw the cloud
+  for (var i = 0; i < cloud.length; i++) {
+    ellipse(cloud[i][0], cloud[i][1], 1, 1);
+  }
   // Draw the coordinates (once for now)
   for (var i = 0; i < coordinates.length; i++) {
     ellipse(coordinates[i][0], coordinates[i][1], 5, 5);
   }
-  
-  for (var i = 0; i < cloud.length; i++) {
-    ellipse(cloud[i][0], cloud[i][1], 1, 1);
-  }
 
-  //Initiate the quadtree object
-  var quadtree = new QuadTree(coordinates);
 }
